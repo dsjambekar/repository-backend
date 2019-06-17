@@ -14,10 +14,24 @@ exports.question_create = function (req, res, next) {
             body: req.body.body,
             explanation: req.body.explanation,
             createdBy: req.body.createdBy,
-            createdAt: req.body.createdAt
-            //options: req.body.options
+            createdAt: req.body.createdAt,
+            options: req.body.options          
+            
         }
     );
+
+
+    // var myArray = new Array();
+
+    // for (var i = 0; i < req.body.options.length; i++) {
+    //     var optionObject = req.body.options;
+    //     myArray.push(optionObject);
+    // }
+
+    //   question.options = myArray;
+
+    //  return next (req.body.options.length);
+
 
     question.save(function (err) {
         if (err) {
@@ -29,6 +43,20 @@ exports.question_create = function (req, res, next) {
 
 exports.question_details = function (req, res, next) {
     Question.findById(req.params.id, function (err, question) {
+        if (err) return next(err);
+        res.send(question);
+    })
+};
+
+exports.question_list_by_user = function (req, res, next) {
+    Question.find({createdBy:req.params.user}, function (err, question) {
+        if (err) return next(err);
+        res.send(question);
+    })
+};
+
+exports.question_list = function (req, res, next) {
+    Question.find({isPublic:true}, function (err, question) {
         if (err) return next(err);
         res.send(question);
     })

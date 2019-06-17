@@ -13,8 +13,11 @@ let QuestionSchema = new Schema({
     body: {type: String, required: true},
     explanation: {type: String, required: true},
     createdBy: {type: String, required: true},
-    createdAt: {type: String, required: true},
-    //options: {type: [OptionSchema], required:false}
+    createdAt: {type: Date, required: true},
+    options: [{
+        isCorrect: {type: Boolean, required: true},
+        body: {type: String, required: true}
+    }]
 });
 
 
@@ -22,4 +25,4 @@ let QuestionSchema = new Schema({
 
 // Export the model
 module.exports = mongoose.model('Question', QuestionSchema);
-//module.exports = mongoose.model('Option', OptionSchema);
+// module.exports = mongoose.model('Option', OptionSchema);
