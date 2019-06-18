@@ -1,11 +1,12 @@
 // app.js
-
 const express = require('express');
 const bodyParser = require('body-parser');
 
 const product = require('./routes/product.route'); // Imports routes for the products
 const question = require('./routes/question.route'); // Imports routes for the questions
+var cors = require('cors')
 const app = express();
+app.use(cors())
 
 // Set up mongoose connection
 const mongoose = require('mongoose');
