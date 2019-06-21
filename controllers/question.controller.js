@@ -49,14 +49,14 @@ exports.question_details = function (req, res, next) {
 };
 
 exports.question_list_by_user = function (req, res, next) {
-    Question.find({createdBy:req.params.user}, function (err, question) {
+    Question.find({}).sort({createdAt: -1}).find({createdBy:req.params.user}, function (err, question) {
         if (err) return next(err);
         res.send(question);
     })
 };
 
 exports.question_list = function (req, res, next) {
-    Question.find({isPublic:true}, function (err, question) {
+    Question.find({}).sort({createdAt: -1}).find({isPublic:true}, function (err, question) {
         if (err) return next(err);
         res.send(question);
     })

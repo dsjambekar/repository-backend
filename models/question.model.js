@@ -11,7 +11,7 @@ let QuestionSchema = new Schema({
     difficultyLevel: {type: String, required: true},
     isPublic: {type: Boolean, required: true},
     body: {type: String, required: true},
-    explanation: {type: String, required: true},
+    explanation: {type: String},
     createdBy: {type: String, required: true},
     createdAt: {type: Date, required: true},
     options: [{
