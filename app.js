@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const product = require('./routes/product.route'); // Imports routes for the products
 const question = require('./routes/question.route'); // Imports routes for the questions
+const user = require('./routes/user.route'); // Imports routes for the questions
 var cors = require('cors')
 const app = express();
 app.use(cors())
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use('/products', product);
 app.use('/questions', question);
+app.use('/users', user);
 
 app.listen(process.env.PORT || 4000, function(){
     console.log('Your node js server is running');
