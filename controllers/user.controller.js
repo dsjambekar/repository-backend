@@ -1,5 +1,5 @@
 const {OAuth2Client} = require('google-auth-library');
-const client = new OAuth2Client('341534115873-nclp710qvjvial7e3pqgel110odcrn9s');
+const client = new OAuth2Client('939928615748-a4q3gq6pjuhjmptrfu4vanhinqh1i9do.apps.googleusercontent.com');
 
 const User = require('../models/user.model');
 
@@ -9,30 +9,34 @@ exports.test = function (req, res) {
 };
 
 exports.verify = function(req, res, next) {
-    console.log("Entered");
+    let payload;
     client.verifyIdToken({
-        idToken: req.params.id,
-        audience: '341534115873-nclp710qvjvial7e3pqgel110odcrn9s'}, function (err, user) {
+        idToken: req.params.idToken,
+        audience: '939928615748-a4q3gq6pjuhjmptrfu4vanhinqh1i9do.apps.googleusercontent.com'}, function (err, ticket) {
             if (err) return next(err);
-            console.log(payload);
+            payload = ticket.getPayload();
+            res.send(payload);
         })
+ 
   };
   
 
+// use payload data to save in the db
 exports.user_create = function (req, res, next) {
     let user = new User(
         {
-            provider: req.body.provider,
             id: req.body.id,
             email: req.body.email,
             name:req.body.name,
+            givenName: req.body.givenName,
+            familyName: req.body.familyName,
             image: req.body.image,
             token: req.body.token,
-            idToken: req.body.idToken   
+            locale: req.body.locale,
+            //idToken: req.body.idToken   
             
         }
     );
-
     user.save(function (err) {
         if (err) {
             return next(err);
@@ -42,7 +46,7 @@ exports.user_create = function (req, res, next) {
 };
 
 exports.user_details = function (req, res, next) {
-    User.findById(req.params.id, function (err, user) {
+    User.findOne({id:req.params.id}, function (err, user) {
         if (err) return next(err);
         res.send(user);
     })

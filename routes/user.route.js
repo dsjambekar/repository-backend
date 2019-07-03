@@ -8,4 +8,8 @@ const user_controller = require('../controllers/user.controller');
 router.get('/test', user_controller.test);
 module.exports = router;
 
-router.get('/:id', user_controller.verify);
+router.get('/:idToken/verify', user_controller.verify);
+
+router.get('/:id', user_controller.user_details);
+
+router.post('/create', user_controller.user_create);
