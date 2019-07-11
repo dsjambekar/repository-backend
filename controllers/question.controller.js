@@ -5,11 +5,10 @@ const mongoose = require('mongoose');
 
 //Simple version, without validation or sanitation
 exports.test = function (req, res) {
-    res.send('Greetings from the Question Test controller!');
+    res.send('Shree Ganeshay Namaha!');
 };
 
 exports.question_create = function (req, res, next) {
-    console.log(req.body);
     let question = new Question(
         {
             _id: new mongoose.Types.ObjectId(),
@@ -23,19 +22,6 @@ exports.question_create = function (req, res, next) {
             options: req.body.options          
         }
     );
-
-
-    // var myArray = new Array();
-
-    // for (var i = 0; i < req.body.options.length; i++) {
-    //     var optionObject = req.body.options;
-    //     myArray.push(optionObject);
-    // }
-
-    //   question.options = myArray;
-
-    //  return next (req.body.options.length);
-
 
     question.save(function (err) {
         if (err) {
