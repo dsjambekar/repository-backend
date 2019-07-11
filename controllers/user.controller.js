@@ -1,4 +1,6 @@
 const {OAuth2Client} = require('google-auth-library');
+const mongoose = require('mongoose');
+
 const client = new OAuth2Client('939928615748-a4q3gq6pjuhjmptrfu4vanhinqh1i9do.apps.googleusercontent.com');
 
 const User = require('../models/user.model');
@@ -25,6 +27,7 @@ exports.verify = function(req, res, next) {
 exports.user_create = function (req, res, next) {
     let user = new User(
         {
+            _id: new mongoose.Types.ObjectId(),
             id: req.body.id,
             email: req.body.email,
             name:req.body.name,
@@ -33,15 +36,13 @@ exports.user_create = function (req, res, next) {
             image: req.body.image,
             token: req.body.token,
             locale: req.body.locale,
-            //idToken: req.body.idToken   
-            
         }
     );
-    user.save(function (err) {
+    user.save(function (err, user) {
         if (err) {
             return next(err);
         }
-        res.send('User created successfully')
+        res.send(user._id)
     })
 };
 

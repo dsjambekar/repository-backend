@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User = require('../models/user.model');
 const Schema = mongoose.Schema;
 
 let OptionSchema = new Schema({
@@ -7,12 +8,16 @@ let OptionSchema = new Schema({
 });
 
 let QuestionSchema = new Schema({
+    _id: Schema.Types.ObjectId,
     questionType: {type: String, required: true},
     difficultyLevel: {type: String, required: true},
     isPublic: {type: Boolean, required: true},
     body: {type: String, required: true},
     explanation: {type: String},
-    createdBy: {type: String, required: true},
+    user: { type: Schema.Types.ObjectId, ref: 'User' },
+    // createdById: {type: String, required: true},
+    // createdByName: {type: String, required: true},
+    // createdByImage: {type: String, required: true},
     createdAt: {type: Date, required: true},
     options: [{
         isCorrect: {type: Boolean, required: true},
