@@ -70,8 +70,28 @@ exports.filter_question_list = function (req, res, next) {
         find({ 'questionType': { $regex: req.body.questionType, $options: 'i' } }).
         find({ 'difficultyLevel': { $regex: req.body.difficultyLevel, $options: 'i' } }).
         sort({createdAt: -1}).
-        populate('user').
-        find({isPublic:true}).
+        find({isPublic:req.body.isPublic}).
+        populate({
+            path: 'user',
+            match: { _id: req.body.user},
+          }).
+        exec(function (err, question) {
+            if (err) return next(err);
+            res.send(question);
+        });
+};
+
+exports.filter_question_list_by_user = function (req, res, next) {
+    Question.
+        find({ 'body': { $regex: req.body.searchText, $options: 'i' } }).
+        find({ 'questionType': { $regex: req.body.questionType, $options: 'i' } }).
+        find({ 'difficultyLevel': { $regex: req.body.difficultyLevel, $options: 'i' } }).
+        sort({createdAt: -1}).
+        find({user:req.body.user}).
+        populate({
+            path: 'user',
+            match: { _id: req.body.user},
+          }).
         exec(function (err, question) {
             if (err) return next(err);
             res.send(question);

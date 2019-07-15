@@ -18,6 +18,8 @@ router.get('', question_controller.question_list);
 
 router.post('/search', question_controller.filter_question_list);
 
+router.post('/searchByUser', question_controller.filter_question_list_by_user);
+
 router.put('/:id/update', question_controller.question_update);
 
 router.delete('/:id/delete', question_controller.question_delete);
